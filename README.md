@@ -54,6 +54,12 @@ python src/orchestrator.py
 ## Test
 <img width="1919" height="489" alt="image" src="https://github.com/user-attachments/assets/74ff4a54-d6aa-4e58-a1c6-51499bc9be3c" />
 
+# Dependencias del Pipeline
+
+- Validación: requiere esquema (`data/schemas/sales_schema_v1.json`) y archivos en `validation.required_files`
+- Transformación: depende de validación exitosa
+- Enriquecimiento: depende de procesado y requiere `data/raw/product_catalog.csv`
+- Carga/Entregas: depende de enriquecimiento exitoso
 
 
 ## Estrategias de Escalabilidad del Pipeline
