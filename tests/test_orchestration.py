@@ -97,4 +97,4 @@ if __name__ == '__main__':
     test = TestPipelineOrchestration()
     test.setup_method()
     test.test_pipeline_initialization()
-    print("✅ Todos los tests pasaron!")
+    print("Todos los tests pasaron!")
