@@ -88,12 +88,12 @@ Esto permite adaptar el pipeline fácilmente a distintos entornos (desarrollo, p
 ## Preguntas de Reflexión
 **1. Ventajas de la Orquestación**
 
-La orquestación convierte varios scripts sueltos en un sistema automatizado y confiable. Permite definir el orden exacto de ejecución, manejar errores correctamente y tener trazabilidad de cada paso. Además, reduce errores humanos y elimina la necesidad de ejecutar tareas manualmente, ya que el pipeline puede funcionar solo y de forma programada.
+La orquestación convierte varios scripts sueltos en un sistema automatizado y confiable, permite definir el orden exacto de ejecución, manejar errores correctamente y tener trazabilidad de cada paso. Además, reduce errores humanos y elimina la necesidad de ejecutar tareas manualmente, ya que el pipeline puede funcionar solo y de forma programada.
 
 **2. Importancia de la Integración Continua (CI)**
 
-La integración continua es como un inspector automático que revisa el código cada vez que se hacen cambios. Cuando subes una actualización a GitHub, se ejecutan pruebas automáticas para comprobar que todo sigue funcionando.
-Esto evita que errores nuevos lleguen a producción y da confianza para modificar o mejorar el código constantemente. En equipos grandes, la CI es clave para evitar que un cambio afecte el trabajo de otros.
+La integración continua es como un inspector automático que revisa el código cada vez que se hacen cambios, cuando subimos una actualización a GitHub, se ejecutan pruebas automáticas para comprobar que todo sigue funcionando.
+así se evitan que errores nuevos lleguen a producción y da confianza para modificar o mejorar el código constantemente. En equipos grandes, la CI es clave para evitar que un cambio afecte el trabajo de otros.
 
 **3. Valor del Logging**
 
