@@ -20,16 +20,19 @@ class PipelineOrchestrator:
         with open(config_path, 'r', encoding='utf-8') as file:
             return yaml.safe_load(file)
 
-    def setup_logging(self):
+      def setup_logging(self):
+        # Crear carpeta de logs si no existe
+        os.makedirs('logs', exist_ok=True)
+
         logging.basicConfig(
             level=logging.INFO,
-            format='%(asctime)s - %(levelname)s - %(message)s',
             handlers=[
                 logging.FileHandler('logs/pipeline_execution.log'),
                 logging.StreamHandler()
-            ]
+            ],
+            format='%(asctime)s - %(levelname)s - %(message)s'
         )
-        self.logger = logging.getLogger(__name__)
+
 
     def execute_pipeline(self):
         """Ejecuta el pipeline completo con manejo de dependencias"""
