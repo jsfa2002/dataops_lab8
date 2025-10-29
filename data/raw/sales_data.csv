@@ -1,0 +1,4 @@
+order_id,product_id,quantity,price,region,order_date
+O-001,P-001,2,10.0,north,2025-10-01T10:00:00
+O-002,P-002,1,20.0,south,2025-10-02T11:00:00
+O-003,P-003,3,5.5,center,2025-10-03T12:30:00
