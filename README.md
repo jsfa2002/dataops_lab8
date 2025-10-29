@@ -132,4 +132,7 @@ Finalmente, la escalabilidad enseña a diseñar pensando en el futuro, asegurand
 - [GitHub Actions](https://docs.github.com/es/actions)
 - [DataOps Principles](https://www.dataopsmanifesto.org/)
 - [pytest](https://docs.pytest.org/en/stable/)
+- deepseek y chat gpt
+- Diapositivas y taller 8 de la materia de enfoque de Data OPS, de la Escuela Colombaiana de Ingeniería Julio Garavito, de la profesora María José Torres
+
 
