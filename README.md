@@ -21,6 +21,7 @@ El objetivo es simular el flujo de trabajo de una empresa que integra, valida y 
    
 
 ---
+En la acrpeta docs se encuentran los diagramas
 
 ##  Ejecución local
 
