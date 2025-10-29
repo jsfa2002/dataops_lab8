@@ -1,6 +1,6 @@
 # Diagrama del Pipeline
 
-Adjunta un diagrama (por ejemplo `docs/pipeline_diagram.png`) si lo creaste con draw.io o diagrams.net.
+<img width="551" height="761" alt="image" src="https://github.com/user-attachments/assets/9763b8b5-7c82-4afd-8ab2-2d3b1d5940ca" />
 
 Componentes principales:
 - Fuentes: CSVs en `data/raw/`
