@@ -17,34 +17,8 @@ El objetivo es simular el flujo de trabajo de una empresa que integra, valida y 
 
 ## Estructura del Proyecto
 
-dataops_lab8/
-├── src/
-│   ├── orchestrator.py          
-│   ├── data_validation.py       
-│   ├── data_processing.py       
-│   ├── data_enrichment.py       
-│   └── quality_checks.py        
-│
-├── config/
-│   └── pipeline_config.yaml     
-│
-├── data/
-│   ├── raw/                     
-│   ├── processed/               
-│   └── outputs/                 
-│
-├── tests/
-│   └── test_orchestration.py    
-│
-├── logs/                        
-│
-├── .github/
-│   └── workflows/
-│       └── ci_orchestration.yml 
-│
-├── scalability_diagram.md       
-├── scalability_strategies.md    
-└── reflection_questions.md      
+<img width="221" height="574" alt="image" src="https://github.com/user-attachments/assets/ccca918f-6461-4175-bc45-ce60fc7b632d" />
+   
 
 ---
 
