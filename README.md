@@ -1,6 +1,6 @@
 #  Laboratorio 8 - Orquestación de Pipelines DataOps
 
-Este proyecto implementa un laboratorio práctico de **DataOps**, enfocado en la **orquestación de pipelines**, la **automatización con CI/CD**, y la **verificación de calidad de datos**.  
+Este proyecto implementa un laboratorio práctico de DataOps, enfocado en la orquestación de pipelines, la automatización con CI/CD, y la verificación de calidad de datos.  
 El objetivo es simular el flujo de trabajo de una empresa que integra, valida y transforma datos antes de usarlos en análisis o dashboards.
 
 
