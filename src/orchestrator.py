@@ -11,40 +11,42 @@ from src.quality_checks import QualityChecker
 
 class PipelineOrchestrator:
     def __init__(self, config_path='config/pipeline_config.yaml'):
+        self.config_path = config_path
         self.config = self.load_config(config_path)
         self.setup_logging()
-        os.makedirs('logs', exist_ok=True)
-        os.makedirs('data/outputs', exist_ok=True)
 
     def load_config(self, config_path):
-        with open(config_path, 'r', encoding='utf-8') as file:
+        with open(config_path, 'r') as file:
             return yaml.safe_load(file)
 
-      def setup_logging(self):
-        # Crear carpeta de logs si no existe
+    def setup_logging(self):
+        """Configura el logging creando directorio si no existe"""
+        # CREAR DIRECTORIO DE LOGS PRIMERO
         os.makedirs('logs', exist_ok=True)
-
+        
         logging.basicConfig(
             level=logging.INFO,
+            format='%(asctime)s - %(levelname)s - %(message)s',
             handlers=[
                 logging.FileHandler('logs/pipeline_execution.log'),
                 logging.StreamHandler()
-            ],
-            format='%(asctime)s - %(levelname)s - %(message)s'
+            ]
         )
-
+        self.logger = logging.getLogger(__name__)
 
     def execute_pipeline(self):
         """Ejecuta el pipeline completo con manejo de dependencias"""
         execution_id = datetime.now().strftime("%Y%m%d_%H%M%S")
         self.logger.info(f"Iniciando ejecución del pipeline: {execution_id}")
+        
         try:
             # 1. Validación de datos
             self.logger.info("Ejecutando validación de datos...")
             validator = DataValidator(self.config['validation'])
             validation_result = validator.validate()
+            
             if not validation_result['success']:
-                raise Exception(f"Validación fallida: {validation_result.get('errors')}")
+                raise Exception(f"Validación fallida: {validation_result.get('errors', 'Error desconocido')}")
 
             # 2. Procesamiento de datos
             self.logger.info("Ejecutando procesamiento de datos...")
@@ -60,8 +62,9 @@ class PipelineOrchestrator:
             self.logger.info("Ejecutando validación de calidad...")
             quality_checker = QualityChecker(self.config['quality'])
             quality_result = quality_checker.check_quality(enrichment_result['enriched_data'])
+            
             if not quality_result['passed']:
-                raise Exception(f"Validación de calidad fallida: {quality_result.get('issues')}")
+                raise Exception(f"Validación de calidad fallida: {quality_result.get('issues', 'Problemas de calidad')}")
 
             # 5. Generación de reportes
             self.logger.info("Generando reportes...")
@@ -85,20 +88,22 @@ class PipelineOrchestrator:
             'execution_id': execution_id,
             'timestamp': datetime.now().isoformat(),
             'records_processed': len(data),
-            'pipeline_version': self.config.get('versioning', {}).get('pipeline_version', 'unknown')
+            'pipeline_version': self.config.get('version', '1.0')
         }
-        # Guardar reporte
+        
+        # CREAR DIRECTORIO DE OUTPUTS SI NO EXISTE
+        os.makedirs('data/outputs', exist_ok=True)
+        
         out_path = f'data/outputs/report_{execution_id}.json'
-        with open(out_path, 'w', encoding='utf-8') as f:
+        with open(out_path, 'w') as f:
             json.dump(report, f, indent=2)
         self.logger.info(f"Reporte guardado en {out_path}")
 
     def send_alert(self, message):
         """Envía alertas (simulado para el ejercicio)"""
         self.logger.info(f"ALERTA: {message}")
-        # Aquí podrías integrar Slack/email en un escenario real
 
 if __name__ == '__main__':
     orchestrator = PipelineOrchestrator('config/pipeline_config.yaml')
     result = orchestrator.execute_pipeline()
-    print(result)
+    print("Resultado final:", result)
