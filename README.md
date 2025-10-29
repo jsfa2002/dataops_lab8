@@ -51,51 +51,65 @@ python src/orchestrator.py
 
 ---
 
+## Test
+<img width="1919" height="489" alt="image" src="https://github.com/user-attachments/assets/74ff4a54-d6aa-4e58-a1c6-51499bc9be3c" />
+
+
+
 ## Estrategias de Escalabilidad del Pipeline
 
-Escalar un pipeline de datos significa prepararlo para crecer. Por ejemplo hoy proceso 100 registros de ventas, pero mañana podrían ser 10,000 o incluso millones. Para lograrlo sin que todo colapse, implementamos cinco estrategias que trabajan juntas como un equipo coordinado.
+Escalar un pipeline de datos significa prepararlo para crecer. Hoy podemos procesar 100 registros de ventas, pero mañana podrían ser 10,000 o incluso millones. Para que el sistema no colapse al crecer, aplicamos cinco estrategias que trabajan juntas como un equipo coordinado.
 
 **1. Orquestación Modular**
 
-La orquestación modular es como armar con bloques de Lego en lugar de construir una pieza gigante. En el pipeline, dividimos el trabajo en componentes independientes: uno valida datos, otro los procesa, otro los enriquece. Cada pieza hace su trabajo específico y puede ser reemplazada, mejorada o reparada sin afectar al resto. Por ejemplo, si necesitamos cambiar cómo validamos los datos, solo modificamos ese módulo, el orquestador actúa coordinando cuándo y cómo cada componente debe ejecutarse, asegurándose de que todos trabajen en armonía y en el orden correcto.
+La orquestación modular es como construir con bloques de Lego en lugar de una sola pieza gigante. En nuestro pipeline dividimos el trabajo en partes independientes: una valida los datos, otra los procesa y otra los enriquece. Cada módulo hace su tarea específica y puede cambiarse o mejorarse sin afectar al resto.
+El orquestador se encarga de coordinar cuándo y cómo se ejecuta cada módulo, asegurando que todo ocurra en el orden correcto y sin interferencias. Esto hace que el sistema sea más ordenado, flexible y fácil de mantener.
 
 **2. Paralelismo Controlado**
 
-El paralelismo controlado es la capacidad de hacer varias cosas al mismo tiempo, pero con inteligencia. Por ejemplo si tenemos datos de ventas de 50 regiones diferentes, en lugar de procesarlas una por una, podemos procesarlas simultáneamente en grupos más pequeños. Sin embargo, no podemos lanzar todas las tareas al mismo tiempo porque saturaríamos la memoria y el procesador. Por eso es "controlado": definimos límites, como por ejemplo "procesar máximo 5 regiones a la vez". Esto acelera mucho el pipeline sin romper nada, aemás, si una región falla, las otras continúan procesándose normalmente.
+El paralelismo controlado permite hacer varias tareas al mismo tiempo, pero sin sobrecargar el sistema. Por ejemplo, si tenemos datos de 50 regiones, no las procesamos una por una, sino en grupos más pequeños, como cinco regiones a la vez.
+De esta forma el pipeline trabaja más rápido, pero sin saturar la memoria o el procesador. Además, si una región falla, las demás continúan sin problema. Este enfoque mejora mucho el rendimiento, manteniendo el control y la estabilidad del sistema.
 
 **3. Uso de Contenedores**
 
-Los contenedores son como cajas especiales que empaquetan todo lo que el pipeline necesita para funcionar: el código, las librerías, las configuraciones. Cuando empaquetamos el pipeline en un contenedor, usando tecnologías como Docker, aseguramos que funcionará exactamente igual en la computadora, en el servidor de pruebas y en producción. Esto elimina los momentos de "en mi computadora funciona pero en producción no", y facilita escalar el pipeline, porque puede crear múltiples copias idénticas del contenedor para manejar más carga.
+Los contenedores son como cajas que guardan todo lo que el pipeline necesita: el código, las librerías y las configuraciones. Al usar tecnologías como Docker, garantizamos que el pipeline funcione igual en cualquier entorno, ya sea en la computadora, en pruebas o en producción.
+Esto evita errores del tipo “en mi computadora funciona pero en producción no”, y facilita escalar, ya que se pueden crear varias copias idénticas del contenedor para procesar más datos al mismo tiempo.
 
 **4. Logs Centralizados**
 
-Los logs centralizados son una bitácora única donde se registra absolutamente todo lo que sucede en el pipeline. En lugar de tener archivos de log dispersos en diferentes computadoras o servicios, todos los mensajes (errores, advertencias, información de progreso) se envían a un lugar central. Cuando algo falla a las 3 AM, no tienes que buscar entre 10 archivos diferentes en 5 servidores distintos para entender qué pasó. Simplemente buscas en el sistema centralizado: "muéstrame todos los errores del pipeline de ventas en las últimas 2 horas". Esto ahorra tiempo valioso en debugging y permite detectar patrones de problemas que serían invisibles mirando logs individuales.
+Los logs centralizados son como una bitácora única donde se registra todo lo que pasa en el pipeline. En vez de tener archivos de registro en distintos servidores, todo se guarda en un solo lugar.
+Así, si ocurre un error, podemos buscarlo rápidamente sin revisar varios archivos. Esto ahorra tiempo, facilita encontrar fallas y ayuda a detectar patrones de error o lentitud que serían difíciles de ver de otra forma. También mejora el monitoreo general del sistema.
 
 **5. Configuración Flexible**
 
-La configuración flexible significa que el comportamiento del pipeline puede cambiar sin modificar el código. Todo lo importante (rutas de archivos, conexiones a bases de datos, umbrales de calidad) se define en archivos de configuración externos, como nuestro pipeline_config.yaml. Quieres procesar datos cada hora en lugar de cada día? Cambias la configuración. Necesitas conectar a una base de datos diferente? Cambias la configuración. Es como tener un panel de control con perillas y botones para ajustar el pipeline sin necesidad de ser programador. Esto es crítico para escalar porque diferentes entornos (desarrollo, pruebas, producción) necesitan configuraciones diferentes, y con este enfoque puedes manejar todos con el mismo código base.
+La configuración flexible permite cambiar cómo se comporta el pipeline sin tener que modificar el código. Aspectos como las rutas de archivos, conexiones a bases de datos o frecuencias de ejecución se definen en archivos externos, como pipeline_config.yaml.
+Esto permite adaptar el pipeline fácilmente a distintos entornos (desarrollo, pruebas o producción) usando el mismo código base. Es como tener un panel de control que te deja ajustar todo con unos pocos cambios.
 
 ## Preguntas de Reflexión
-
 **1. Ventajas de la Orquestación**
 
-La orquestación convierte un conjunto de scripts sueltos en un sistema profesional y confiable. Su primera gran ventaja es el control total: decides exactamente cuándo se ejecuta cada paso, en qué orden, y qué hacer si algo falla. No más "olvidé ejecutar este script" o "los ejecuté en el orden equivocado". La trazabilidad es otra ventaja clave: cada ejecución del pipeline genera un registro completo de qué pasó, cuándo pasó, y qué datos procesó. Si un reporte sale mal el martes, puedes revisar exactamente qué sucedió ese día. Finalmente, la automatización elimina el trabajo manual repetitivo y los errores humanos. Una vez configurado, el pipeline se ejecuta solo, a la hora exacta, todos los días, sin necesidad de que alguien lo active manualmente.
+La orquestación convierte varios scripts sueltos en un sistema automatizado y confiable. Permite definir el orden exacto de ejecución, manejar errores correctamente y tener trazabilidad de cada paso. Además, reduce errores humanos y elimina la necesidad de ejecutar tareas manualmente, ya que el pipeline puede funcionar solo y de forma programada.
 
 **2. Importancia de la Integración Continua (CI)**
 
-La integración continua es como tener un inspector de calidad que revisa automáticamente cada cambio que haces en el código antes de que llegue a producción. Imagina que modificas la lógica de validación de datos y accidentalmente rompes algo. Sin CI, ese error llegaría a producción y afectaría a usuarios reales. Con CI, cada vez que subes un cambio a GitHub, se ejecutan automáticamente todas las pruebas: "¿el código sigue funcionando?", "¿las validaciones pasan?", "¿los reportes se generan correctamente?". Si algo falla, recibes una alerta inmediata y el código problemático nunca llega a producción. Esto te da confianza para hacer cambios frecuentes, porque sabes que hay una red de seguridad que atrapará los errores. En equipos de varias personas, el CI es aún más crítico porque evita que el código de un desarrollador rompa el trabajo de otro.
+La integración continua es como un inspector automático que revisa el código cada vez que se hacen cambios. Cuando subes una actualización a GitHub, se ejecutan pruebas automáticas para comprobar que todo sigue funcionando.
+Esto evita que errores nuevos lleguen a producción y da confianza para modificar o mejorar el código constantemente. En equipos grandes, la CI es clave para evitar que un cambio afecte el trabajo de otros.
 
 **3. Valor del Logging**
 
-El logging es la memoria del pipeline. Cuando algo funciona bien, los logs registran el éxito y las métricas de rendimiento. Cuando algo falla, los logs son la diferencia entre resolver el problema en 10 minutos versus pasar horas buscando a ciegas. Los logs facilitan auditorías porque permiten responder preguntas como "¿cuántos registros procesamos el mes pasado?" o "¿cuándo comenzó a fallar la validación?". En la depuración, los logs son oro puro: te dicen exactamente en qué línea del código falló el proceso, qué datos estaba procesando, y qué error específico ocurrió. Además, con logs estructurados puedes generar métricas automáticas (velocidad de procesamiento, tasa de errores) que ayudan a optimizar el pipeline continuamente. Sin buenos logs, operas a ciegas; con ellos, tienes visibilidad total.
+El logging es la memoria del pipeline. Guarda los resultados de cada proceso, tanto los correctos como los errores. Gracias a los logs, se puede saber cuándo y por qué algo falló, o revisar el rendimiento general del sistema.
+También permiten generar métricas como velocidad de procesamiento o tasas de error, lo que facilita mejorar el pipeline continuamente. Sin buenos logs, trabajaríamos a ciegas; con ellos, tenemos control total.
 
 **4. Retos de Escalabilidad**
 
-Escalar un pipeline no es solo "agregar más recursos". El primer reto es la concurrencia: cuando procesas múltiples tareas simultáneamente, aparecen problemas que no existían antes, como dos procesos intentando escribir en el mismo archivo o bloqueos en la base de datos. Resolver esto requiere diseñar cuidadosamente cómo se coordinan las tareas paralelas. El segundo reto es la distribución: cuando los datos crecen tanto que no caben en una sola máquina, necesitas distribuir el procesamiento entre múltiples servidores. Esto introduce complejidad en la coordinación, el manejo de fallos de red, y la sincronización de resultados. El tercer reto es el costo: más recursos cuestan más dinero. Debes encontrar el balance entre rendimiento y presupuesto, optimizando para procesar más datos con menos recursos. Además, al escalar, los pequeños ineficiencias del código se magnifican: una consulta lenta que no molestaba con 100 registros puede paralizar el sistema con un millón de registros.
+Escalar un pipeline no se trata solo de agregar más recursos. Uno de los principales retos es manejar tareas simultáneas sin generar conflictos o bloqueos. Otro es distribuir los datos entre varios servidores cuando son demasiado grandes para uno solo.
+Además, más recursos significan más costos, por lo que se debe buscar el equilibrio entre rendimiento y presupuesto. Incluso pequeños errores en el código pueden causar grandes problemas al trabajar con millones de registros, por lo que optimizarlo es esencial.
 
 **5. Aprendizaje del Laboratorio**
 
-Este laboratorio integró tres pilares fundamentales de la ingeniería de datos moderna. Primero, la integración CI/CD enseña que el código no termina cuando funciona en tu computadora; debe funcionar automáticamente, con pruebas, en cualquier entorno. Ver cómo GitHub Actions ejecuta el pipeline, corre las pruebas, y reporta resultados automáticamente muestra el poder de la automatización. Segundo, la modularidad demuestra que dividir un problema complejo en componentes pequeños y especializados hace el sistema más fácil de entender, probar, y mantener. Cada módulo (validación, procesamiento, enriquecimiento) tiene una responsabilidad clara, lo que facilita encontrar y corregir problemas. Tercero, la escalabilidad enseña a pensar en el futuro: diseñar hoy para que el sistema pueda crecer mañana. Documentar estrategias de escalabilidad (de local a nube a distribuido) muestra que no existe una solución única para todos los casos, sino un camino evolutivo que se adapta según el volumen de datos y las necesidades del negocio. La lección más valiosa es que un buen pipeline no es solo código que funciona, es un sistema completo con automatización, monitoreo, documentación, y capacidad de crecer.
+
+Este laboratorio enseñó tres conceptos fundamentales: automatización, modularidad y escalabilidad. La automatización con CI/CD demuestra que el código debe funcionar de forma estable en cualquier entorno. La modularidad facilita entender, probar y mantener cada parte del sistema.
+Finalmente, la escalabilidad enseña a diseñar pensando en el futuro, asegurando que el pipeline pueda crecer según las necesidades del proyecto. En conjunto, todo esto muestra que un buen pipeline no solo procesa datos, sino que también es confiable, monitoreable y capaz de evolucionar con el tiempo.
 
 ---
 
